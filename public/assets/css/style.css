@@ -1,0 +1,10 @@
+#banner{
+  background-image: url(../images/banner3.jpg);
+	background-size: 100% 100%;
+}
+p.info{
+  color: white;
+}
+div.modal div.modal-backdrop {
+    z-index: 0;
+}

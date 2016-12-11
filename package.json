@@ -1,0 +1,19 @@
+{
+  "name": "news-scrape",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gael7/news-scrape.git"
+  },
+  "author": "Gael Arrambide",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gael7/news-scrape/issues"
+  },
+  "homepage": "https://github.com/gael7/news-scrape#readme"
+}
