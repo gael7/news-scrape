@@ -1,5 +1,7 @@
 // Dependencies
 var express = require("express");
+var exphbs = require("express-handlebars");
+var methodOverride = require("method-override");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
@@ -28,7 +30,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Make public a static dir
-app.use(express.static("public"));
+app.use(express.static(process.cwd() + '/public'));
 
 // Database configuration with mongoose
 mongoose.connect("mongodb://heroku_s431x7qv:v6o20ccbki5fflqc094lkb0uh2@ds119578.mlab.com:19578/heroku_s431x7qv");
@@ -47,11 +49,11 @@ db.once("open", function() {
 
 // Routes
 // ======
-
 // Simple index route
 app.get("/", function(req, res) {
-  res.send(index.html);
+  res.render("index");
 });
+
 
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
@@ -70,7 +72,6 @@ app.get("/scrape", function(req, res) {
       result.link = $(element).children().attr("href");
       result.image=$(element).children().children("div.m_highlight_header").children("img").attr("data-lazy");
       result.info=$(element).children().children("div.m_highlight_content").children("p").text();
-      console.log(result);
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
      var entry = new Article(result);
@@ -81,16 +82,12 @@ app.get("/scrape", function(req, res) {
         if (err) {
           console.log(err);
         }
-        // Or log the doc
-        else {
-          console.log(doc);
-        }
       });
 
     });
   });
   // Tell the browser that we finished scraping the text
-  res.send("Scrape Complete");
+  res.render("scrape");
 });
 
 // This will get the articles we scraped from the mongoDB
@@ -159,6 +156,13 @@ app.post("/articles/:id", function(req, res) {
   });
 });
 
+app.use(methodOverride('_method'));
+
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+
+app.set('view engine', 'handlebars');
 
 // Listen on port 3000
 app.listen(process.env.PORT || 3000, function(){

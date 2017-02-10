@@ -10,9 +10,10 @@ $.getJSON("/articles", function(data) {
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
     if (i%2===0){
-      $("#articles").append("<div class='col-lg-5'><div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title' data-id='" + data[i]._id + "'>" + data[i].title+"</h3></div><div class='panel-body'><img src='"+appObj.url+data[i].image+"' alt='"+data[i].title+"' class='img-responsive'><p class='info'>"+data[i].info+"</p><a href='"+appObj.url+data[i].link+"'class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-4'>Full Article</a><div class='col-lg-6 col-md-4 col-sm-7 col-xs-5'></div><button type='button' class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-3' data-target='#notes' data-toggle='modal' data-id='" + data[i]._id + "'>Note</button></div></div></div>");
+      $("#articles").prepend("<div class='row'><div class='col-lg-5'><div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title' data-id='" + data[i]._id + "'>" + data[i].title+"</h3></div><div class='panel-body'><img src='"+appObj.url+data[i].image+"' alt='"+data[i].title+"' class='img-responsive'><p class='info'>"+data[i].info+"</p><a href='"+appObj.url+data[i].link+"'class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-4'>Full Article</a><div class='col-lg-6 col-md-4 col-sm-7 col-xs-5'></div><button type='button' class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-3' data-target='#notes' data-toggle='modal' data-id='" + data[i]._id + "'>Note</button></div></div></div>");
+
     } else {
-    $("#articles").append("<div class='row'><div class='col-lg-5'><div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title' data-id='" + data[i]._id + "'>" + data[i].title+"</h3></div><div class='panel-body'><img src='"+appObj.url+data[i].image+"' alt='"+data[i].title+"' class='img-responsive'><p class='info'>"+data[i].info+"</p><a href='"+appObj.url+data[i].link+"'class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-4'>Full Article</a><div class='col-lg-6 col-md-4 col-sm-7 col-xs-5'></div><button type='button' class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-3' data-target='#notes' data-toggle='modal' data-id='" + data[i]._id + "'>Note</button></div></div></div>");
+    $("#articles").prepend("<div class='col-lg-5'><div class='panel panel-primary'><div class='panel-heading'><h3 class='panel-title' data-id='" + data[i]._id + "'>" + data[i].title+"</h3></div><div class='panel-body'><img src='"+appObj.url+data[i].image+"' alt='"+data[i].title+"' class='img-responsive'><p class='info'>"+data[i].info+"</p><a href='"+appObj.url+data[i].link+"'class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-4'>Full Article</a><div class='col-lg-6 col-md-4 col-sm-7 col-xs-5'></div><button type='button' class='btn btn-info col-lg-3 col-md-2 col-sm-2 col-xs-3' data-target='#notes' data-toggle='modal' data-id='" + data[i]._id + "'>Note</button></div></div></div>");
   }
   }
 });
@@ -79,8 +80,4 @@ $(document).on("click", "#savenote", function() {
       // Log the response
       console.log(data);
     });
-
-  // Also, remove the values entered in the input and textarea for note entry
-//  $("#titleinput").val("");
-//  $("#bodyinput").val("");
 });
