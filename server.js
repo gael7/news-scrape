@@ -70,19 +70,25 @@ app.get("/scrape", function(req, res) {
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(element).children().attr("title");
       result.link = $(element).children().attr("href");
-      result.image=$(element).children().children("div.m_highlight_header").children("img").attr("data-lazy");
+      result.image=$(element).children().children("div.m_highlight_header").children("img").attr("src");
       result.info=$(element).children().children("div.m_highlight_content").children("p").text();
       // Using our Article model, create a new entry
       // This effectively passes the result object to the entry (and the title and link)
      var entry = new Article(result);
-
+     Article.findOne({"title": entry.title}).exec(function (error, doc){
+       if(!doc){
+         entry.save(function(err, doc) {
+           // Log any errors
+           if (err) {
+             console.log(err);
+           }
+         });
+       } else if(error){
+         console.log(error);
+       }
+     });
       // Now, save that entry to the db
-      entry.save(function(err, doc) {
-        // Log any errors
-        if (err) {
-          console.log(err);
-        }
-      });
+
 
     });
   });
@@ -128,7 +134,6 @@ app.get("/articles/:id", function(req, res) {
 // Create a new note or replace an existing note
 app.post("/articles/:id", function(req, res) {
   // Create a new note and pass the req.body to the entry
-  console.log(req.body);
   var newNote = new Note(req.body);
 
   // And save the new note the db
